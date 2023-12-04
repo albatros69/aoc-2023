@@ -22,7 +22,7 @@ bag = { 'red': 12, 'green': 13, 'blue': 14 }
 def is_valid(game: List[dict]) -> bool:
     return all(all(draw[color] <= bag[color] for color in draw) for draw in game)
 
-print("Part 1:", sum(i for i in games if is_valid(games[i])))
+print("Part 1:", sum(i for i,g in games.items() if is_valid(g)))
 
 def power(game: List[dict]) -> int:
     result = { 'red': 0, 'green': 0, 'blue': 0 }

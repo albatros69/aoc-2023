@@ -19,8 +19,6 @@ w_digits = (
     'six', 'seven', 'eight', 'nine')
 
 def convert(l: str):
-    pos = tuple()
-
     _, left = min((l.find(w), w) for w in w_digits if w in l)
     _, right = max((l.rfind(w), w) for w in w_digits)
     if not left.isdigit():

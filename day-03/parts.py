@@ -51,4 +51,4 @@ for y in range(size_y+1):
             gears[is_gear].append(int(current_number))
 
 print("Part 1:", sum(parts))
-print("Part 2:", sum([ mul(*l) for l in gears.values() if len(l)==2 ]))
+print("Part 2:", sum(mul(*l) for l in gears.values() if len(l)==2))
