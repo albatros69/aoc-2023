@@ -50,13 +50,11 @@ def convert_p2(start: int, lg: int, src: str, dst: str) -> int:
             else:
                 result.append((d+(start-s), s+l-start))
                 start, lg = s+l, start+lg-s-l
-                assert lg >= 0
         elif start <= s < start+lg:
             result.append((start, s-start))
             if s+l <= start+lg:
                 result.append((d,l))
                 start, lg = s+l, start+lg-s-l
-                assert lg >= 0
             else:
                 result.append((d, start+lg-s))
                 start, lg = -1, 0
