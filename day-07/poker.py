@@ -103,5 +103,6 @@ class Hand_p2(Hand_p1):
             case _:
                 self.type = Kind.HIGH
 
+
 hands = sorted(Hand_p2(l) for l in lines)
 print("Part 2:", sum((rank+1)*hand.bid for rank, hand in enumerate(hands)))
