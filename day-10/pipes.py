@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 
-from collections import defaultdict, deque
+from collections import defaultdict
 import sys
 
 lines = []
