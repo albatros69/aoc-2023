@@ -8,7 +8,6 @@ for line in sys.stdin:
     lines.append(line.rstrip('\n'))
 
 ground = defaultdict(lambda: '.')
-tiles = defaultdict(bool)
 start_pos = None
 for y,l in enumerate(lines):
     for x,c in enumerate(l):
