@@ -42,10 +42,10 @@ def walk_loop(start):
 
     pos, letter = start, ground[start_pos]
     result = [start]
-    dir = 0
+    direction = 0
     while True:
         for d in possible_neighs[letter]:
-            if d == -dir:
+            if d == -direction:
                 continue
 
             if pos+d == start:
@@ -53,7 +53,7 @@ def walk_loop(start):
                 break
 
             if ground[pos+d] in possible_neighs[letter][d]:
-                dir = d
+                direction = d
                 pos += d
                 letter = ground[pos]
                 result.append(pos)
@@ -79,9 +79,3 @@ def ray(pos):
 
 inside = set(p for p in ground if p not in loop and ray(p))
 print("Part 2:", len(inside))
-
-
-
-
-
-
