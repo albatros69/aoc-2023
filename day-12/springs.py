@@ -41,6 +41,7 @@ def correct_arrangments(l, groups):
 
     return result
 
+
 with ThreadPoolExecutor() as executor:
     futures = set()
     for l in lines:
@@ -55,10 +56,7 @@ print("Part 1:", nb_arrangements)
 def rec_arrangments(l, groups, in_block):
 
     if not l:
-        if not groups:
-            return 0
-        else:
-            return 0
+        return 0
 
     match l[0]:
 
