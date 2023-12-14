@@ -39,6 +39,7 @@ def tilt(p: dict):
         for x in range(size):
             move_north(p, x+y*1j)
 
+
 def load(p: dict) -> int:
     return sum(size-y for (x,y) in product(range(size), repeat=2)
                if p[x+y*1j] == 'O')
@@ -52,6 +53,7 @@ print("Part 1:", load(part_1))
 def rotation(p: dict):
     return { z*1j + size-1: v for (z,v) in p.items() }
 
+
 part_2 = ori_platform.copy()
 already_seen = { }
 step = 0
@@ -62,14 +64,14 @@ while step < maxi:
         tilt(part_2)
         part_2 = rotation(part_2)
 
-    # pylint: disable=C0201
-    if str_platform(part_2) in already_seen.keys():
-        cycle = already_seen[str_platform(part_2)]
+    hash = str_platform(part_2)
+    if hash in already_seen:
+        cycle = already_seen[hash]
         nb_cycles = (maxi-step)//(step-cycle)
         step += nb_cycles*(step-cycle)
         already_seen = {}
 
-    already_seen[str_platform(part_2)] = step
+    already_seen[hash] = step
     step += 1
 
 print("Part 2:", load(part_2))
