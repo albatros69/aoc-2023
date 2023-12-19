@@ -46,7 +46,7 @@ def shape(pos: complex) -> str:
         case 'LD'|'UR':
             return '/'
         case _:
-            return 'PROUT!'
+            raise ValueError
 
 
 def is_edge(pos: complex) -> bool:
