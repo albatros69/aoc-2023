@@ -38,7 +38,6 @@ EMPTY = QuadPart((0,0), (0,0), (0,0), (0,0))
 
 
 class SingleRule():
-    workflow: 'Workflow'
     test: str
     dest: str
 
@@ -110,7 +109,7 @@ class Workflow():
     def __repr__(self) -> str:
         return str(self)
 
-    def apply_p1(self, part) -> str:
+    def apply_p1(self, part: Part) -> str:
         for r in self.rules:
             dest = r.apply_p1(part)
             if dest in ('A', 'R'):
@@ -120,7 +119,7 @@ class Workflow():
             else:
                 return rules[dest].apply_p1(part)
 
-    def apply_p2(self, qpart) -> List[QuadPart]:
+    def apply_p2(self, qpart: QuadPart) -> List[QuadPart]:
         result = []
         qp = qpart
         for r in self.rules:
