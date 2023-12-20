@@ -110,7 +110,6 @@ while True:
     button_presses += 1
     while status:
         new_status = []
-        cpt.update(p for _,_,p in status)
         for source, module, pulse in status:
             try:
                 if module in feed_modules and not pulse:
