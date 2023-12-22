@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import sys
 from ast import literal_eval
-from functools import cached_property
 from itertools import product
 
 lines = []
@@ -12,15 +11,14 @@ for line in sys.stdin:
     lines.append(line.rstrip('\n'))
 
 class Brick:
-    first_end: dict
-    last_end: dict
-    name: str
 
     def __init__(self, line, name=None):
         b1, b2 = sorted(map(literal_eval, line.split('~')))
         self.first_end = dict(zip("xyz", b1))
         self.last_end = dict(zip("xyz", b2))
         self.altitude = self.last_end['z']
+        self.cubes = set(c for c in product(*(range(self.first_end[i], self.last_end[i]+1) for i in "xy")))
+
         self.supports = list()
         self.supported_by = list()
         self.name = name
@@ -29,10 +27,6 @@ class Brick:
     @property
     def is_horizontal(self) -> bool:
         return self.first_end['z'] == self.last_end['z']
-
-    @cached_property
-    def cubes(self) -> set:
-        return set(c for c in product(*(range(self.first_end[i], self.last_end[i]+1) for i in "xy")))
 
     def intersect(self, other: Brick) -> bool:
         return len(self.cubes & other.cubes) >= 1
@@ -64,12 +58,8 @@ for i,line in enumerate(lines):
 stack.sort(key=lambda b: b.first_end['z'], reverse=True)
 
 settled_stack = []
-max_z = 0
 while stack:
     new_brick = stack.pop()
-    if new_brick.altitude > max_z:
-        new_brick.move_down(new_brick.altitude-max_z-1)
-        max_z += 1
 
     for b in settled_stack:
         if new_brick.intersect(b):
@@ -91,10 +81,8 @@ while stack:
             b.supports.append(new_brick)
             new_brick.supported_by.append(b)
 
-    max_z = new_brick.altitude
     settled_stack.append(new_brick)
     settled_stack.sort(key=lambda b: b.altitude, reverse=True)
-
 
 print("Part 1:", sum(b.safe_to_disintegrate for b in settled_stack))
 
