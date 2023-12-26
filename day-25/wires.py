@@ -44,18 +44,22 @@ def min_cut(G_ori, E_ori):
     mini = len(E_ori)
     result = None
 
-    with ThreadPoolExecutor() as executor:
+    with ThreadPoolExecutor(max_workers=16) as executor:
         futures = set()
         for _ in range(int(n**2/2)+1):
             futures.add(executor.submit(cut_graph, G_ori, E_ori))
 
-            for f in as_completed(futures):
-                G, E = f.result()
-                print(mini, len(E), tuple(n.count('.')+1 for n in G))
+            try:
+                for f in as_completed(futures, timeout=0.5):
+                    G, E = f.result()
+                    print(mini, len(E), tuple(n.count('.')+1 for n in G), flush=True)
 
-                if len(E) < mini:
-                    mini = len(E)
-                    result = G, E
+                    if len(E) < mini:
+                        mini = len(E)
+                        result = G, E
+                    futures.discard(f)
+            except TimeoutError:
+                print(len(futures))
 
             if mini <= 3:
                 for f in futures:
