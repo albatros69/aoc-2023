@@ -23,7 +23,7 @@ for line in lines:
 # https://en.wikipedia.org/wiki/Karger%27s_algorithm
 
 def edge_contraction(edge: set, G, E):
-    new_node = '.'.join(sorted(edge))
+    new_node = '.'.join(edge)
     return (G-edge)|{new_node}, [ (e-edge)|{new_node} if e&edge else e for e in E if e != edge ]
 
 
@@ -44,7 +44,7 @@ def min_cut(G_ori, E_ori):
     mini = len(E_ori)
     result = None
 
-    with ThreadPoolExecutor(max_workers=32) as executor:
+    with ThreadPoolExecutor() as executor:
         futures = set()
         for _ in range(int(n**2/2)+1):
             futures.add(executor.submit(cut_graph, G_ori, E_ori))
