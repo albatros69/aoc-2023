@@ -40,7 +40,7 @@ ground[start_pos] = start_letter(start_pos)
 
 def walk_loop(start):
 
-    pos, letter = start, ground[start_pos]
+    pos, letter = start, ground[start]
     result = [start]
     direction = 0
     while True:
