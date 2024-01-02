@@ -29,12 +29,23 @@ def neigh_p1(pos):
 
 
 queue = [ (0, start, (start, ))]
+already_seen = dict()
 max_steps = 0
 while queue:
     steps, pos, path = queue.pop()
 
+    try:
+        if already_seen[pos] > steps:
+            continue
+    except KeyError:
+        pass
+
     if pos == finish:
-        max_steps = max(max_steps, steps)
+        if steps > max_steps:
+            print(len(queue), max_steps, steps)
+            max_steps = steps
+            for s,p in enumerate(path):
+                already_seen[p] = s
         continue
 
     for new_pos in neigh_p1(pos):
