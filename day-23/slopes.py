@@ -84,7 +84,7 @@ while queue:
 
     if pos == finish:
         if steps > max_steps:
-            # print(len(queue), max_steps, steps)
+            print(len(queue), max_steps, steps)
             max_steps = steps
             for s,p in enumerate(path):
                 already_seen[p] = s

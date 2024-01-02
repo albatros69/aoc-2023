@@ -72,3 +72,4 @@ def location_p2(s: int, l: int) -> int:
     return result
 
 print("Part 2:", min(chain.from_iterable(location_p2(*seeds[i:i+2]) for i in range(0, len(seeds), 2)))[0])
+
