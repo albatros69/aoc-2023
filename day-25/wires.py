@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor, as_completed
 from math import prod
 from random import choice
 import sys
@@ -44,13 +44,13 @@ def min_cut(G_ori, E_ori):
     mini = len(E_ori)
     result = None
 
-    with ThreadPoolExecutor(max_workers=16) as executor:
+    with ProcessPoolExecutor(max_workers=4) as executor:
         futures = set()
         for _ in range(int(n**2/2)+1):
             futures.add(executor.submit(cut_graph, G_ori, E_ori))
 
             try:
-                for f in as_completed(futures, timeout=0.5):
+                for f in as_completed(futures, timeout=0.3):
                     G, E = f.result()
                     print(mini, len(E), tuple(n.count('.')+1 for n in G), flush=True)
 
