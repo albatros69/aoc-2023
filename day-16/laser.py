@@ -1,5 +1,6 @@
 #! /usr/bin/env python
 
+from concurrent.futures import ProcessPoolExecutor
 import sys
 
 lines = []
@@ -43,10 +44,15 @@ print("Part 1:", light(0, 1))
 
 maxi = 0
 m, n = len(lines), len(lines[0])
-for y in range(m):
-    maxi = max(maxi, light(y*1j, 1), light(n-1+y*1j, -1))
-for x in range(n):
-    maxi = max(maxi, light(x,1j), light(x+(m-1)*1j, -1j))
+with ProcessPoolExecutor() as executor:
+    futures = set()
+    for y in range(m):
+        futures.add(executor.submit(light, y*1j, 1))
+        futures.add(executor.submit(light, n-1+y*1j, -1))
+    for x in range(n):
+        futures.add(executor.submit(light, x, 1j))
+        futures.add(executor.submit(light, x+(m-1)*1j, -1j))
 
+maxi = max(f.result() for f in futures)
 print("Part 2:", maxi)
 
